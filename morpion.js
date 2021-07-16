@@ -124,14 +124,57 @@ class Morpion {
 		if (this.gameOver) {
 			return;
 		}
-
 		let hasPlayed = false;
+		let cells =[]
 		this.gridMap.forEach((line, y) => {
 			line.forEach((cell, x) => {
-				if (!cell && !hasPlayed) {
-					hasPlayed = this.drawHit(x, y, this.iaPlayer);
+				if(!cell){
+				cells.push([y,x])
 				}
 			});
 		});
+		let randomCell =(cells.sort((a, b) => 0.5 - Math.random()))[0]
+		if (!hasPlayed) {
+			hasPlayed = this.drawHit(randomCell[1], randomCell[0], this.iaPlayer);
+		}
+	}
+}
+
+class Node{
+	constructor(value){
+		this.value = value
+		this.left  = null
+		this.right = null
+	}
+}
+
+class BST{
+	constructor(){
+		this.root = null
+	}
+
+	insert(value){
+		const newNode = new Node(value);
+		if(this.root == null){
+			this.root = newNode;
+		}else{
+			insertNode(this.root, value);
+		}
+	}
+
+	insertNode(node,value){
+		if(node.value > value){
+			if(node.left.value == null){
+				node.left.value = value;
+			}else{
+				this.insertNode(node.left, value);
+			}
+		}else{
+			if(node.right.value == null){
+				node.right.value = value;
+			}else{
+				this.insertNode(node.right, value);
+			}
+		}
 	}
 }
